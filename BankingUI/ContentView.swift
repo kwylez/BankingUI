@@ -44,23 +44,40 @@ struct ContentView: View {
                 
                 ///
                 
-                ForEach(0...200, id: \.self) { _ in
-                    
-                    Circle()
-                        .foregroundColor(Color("TopPink"))
-                        .opacity(0.2)
-                    .animation(
-                        Animation.interpolatingSpring(stiffness: 0.5, damping: 0.5)
-                        .repeatForever()
-                        .speed(.random(in: 0.05...0.9))
-                        .delay(.random(in: 0...2))
-                    )
-                    .scaleEffect(.random(in: 0.1...2))
-                    .frame(width: .random(in: 10...100), height: .random(in: 10...100))
-                    .position(x: self.randomCoord(reader.size.width),
-                              y: self.randomCoord(reader.size.height))
-                }.drawingGroup()
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(0.1)
+                    .cornerRadius(10.0)
+                    .frame(width: 75, height: 207.0)
+                    .position(x: reader.size.width - 35, y: 50.0)
                 
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(0.1)
+                    .cornerRadius(15.0)
+                    .frame(width: 145, height: 110.0)
+                    .position(x: reader.size.width-72.5, y: 100.0)
+                
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(0.1)
+                    .cornerRadius(10.0)
+                    .frame(width: 60, height: 110.0)
+                    .position(x: 0, y: reader.size.height / 3)
+                
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(0.15)
+                    .cornerRadius(15.0)
+                    .frame(width: 260, height: 110.0)
+                    .position(x: 0, y: (reader.size.height / 3) + 85)
+                
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(0.15)
+                    .cornerRadius(15.0)
+                    .frame(width: 165, height: 140.0)
+                    .position(x: reader.size.width / 2, y: reader.size.height)
                 ///
                 
                 VStack {
