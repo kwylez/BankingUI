@@ -14,6 +14,8 @@ let dayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())
 
 struct ContentView: View {
     
+    @State var showMenu: Bool = false
+    
     var transactions: Array<Transaction> = [
 
             Transaction(category: .groceries, date: dayAgo!, amount: 120.93),
@@ -41,9 +43,7 @@ struct ContentView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 ).edgesIgnoringSafeArea(.all)
-                
-                ///
-                
+
                 Rectangle()
                     .foregroundColor(.white)
                     .opacity(0.1)
@@ -78,7 +78,6 @@ struct ContentView: View {
                     .cornerRadius(15.0)
                     .frame(width: 165, height: 140.0)
                     .position(x: reader.size.width / 2, y: reader.size.height)
-                ///
                 
                 VStack {
                     
@@ -110,6 +109,7 @@ struct ContentView: View {
                             Spacer()
                         }
                     }
+                    
                     Spacer()
                     List {
                         ForEach(self.transactions, id: \.id) { transaction in
@@ -146,14 +146,50 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(15.0)
                                 Image(systemName: "plus")
-                                    .foregroundColor(Color("TopPink"))
+                                    .foregroundColor(Color("Pink"))
                                     .font(.system(size: 40, weight: .bold))
-                                    .opacity(0.6)
+                                    .rotationEffect(.degrees(self.showMenu ? -45 : 0))
+                                    .animation(.spring())
                             }
                             .frame(width: 75, height: 75.0)
                             .padding(.trailing)
-                            .offset(x: 0, y: -10)
-                            
+                            .offset(x: -10, y: -15)
+                            .onTapGesture {
+                                self.showMenu.toggle()
+                            }
+                        }
+    
+                        ZStack {
+
+                            HStack {
+                                Spacer()
+                                MenuRow(rowItem: MenuRowItem(text: "Income", systemImag: "plus", color: Color("Green")))
+                                    .padding(.trailing)
+                                    .frame(width: 250.0, height: 75.0)
+                                    .offset(x: 0, y: self.showMenu ? -300 : 0)
+                                    .opacity(self.showMenu ? 1 : 0)
+                                    .animation(Animation.spring(response: 0.4, dampingFraction: 0.5))
+                            }
+
+                            HStack {
+                                Spacer()
+                                MenuRow(rowItem: MenuRowItem(text: "Expense", systemImag: "minus", color: Color("LightPink")))
+                                    .padding(.trailing)
+                                    .frame(width: 250.0, height: 75.0)
+                                    .offset(x: 0, y: self.showMenu ? -200 : 0)
+                                    .opacity(self.showMenu ? 1 : 0)
+                                    .animation(Animation.spring(response: 0.4, dampingFraction: 0.5))
+                            }
+
+                            HStack {
+                                Spacer()
+                                MenuRow(rowItem: MenuRowItem(text: "Transfer", systemImag: "chevron.right", color: Color("Purple")))
+                                    .padding(.trailing)
+                                    .frame(width: 250.0, height: 75.0)
+                                    .offset(x: 0, y: self.showMenu ? -100 : 0)
+                                    .opacity(self.showMenu ? 1 : 0)
+                                    .animation(Animation.spring(response: 0.4, dampingFraction: 0.5))
+                            }
                         }
                     }
                 }
